@@ -1,0 +1,16 @@
+baseURL = "https://lowply-hello-actions.firebaseapp.com/"
+languageCode = "en-us"
+title = "Hello Actions!"
+theme = "sam"
+
+[[params.mainMenu]]
+    link = "/"
+    text = "Hello Actions!"
+
+[[params.mainMenu]]
+    link = "https://github.com/features/actions"
+    text = "What is GitHub Actions? 🤔"
+
+[[params.mainMenu]]
+    link = "https://github.com/lowply/hello-actions"
+    text = "Souce repository 📝"

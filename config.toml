@@ -14,3 +14,7 @@ theme = "sam"
 [[params.mainMenu]]
     link = "https://github.com/lowply/hello-actions"
     text = "Souce repository 📝"
+
+[[params.mainMenu]]
+    link = "https://github.com/lowply/"
+    text = "About Me"

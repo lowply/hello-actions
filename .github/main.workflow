@@ -9,13 +9,13 @@ action "Only Master" {
 }
 
 action "Build" {
-  uses = "lowply/actions-hugo-firebase/build-hugo@master"
+  uses = "lowply/build-hugo@master"
   needs = ["Only Master"]
   runs = "hugo"
 }
 
 action "Deploy" {
-  uses = "lowply/actions-hugo-firebase/deploy-firebase@master"
+  uses = "lowply/deploy-firebase@master"
   needs = ["Build"]
   secrets = ["FIREBASE_TOKEN"]
 }

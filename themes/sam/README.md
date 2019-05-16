@@ -1,25 +1,29 @@
-<h1><a href="https://vickylai.com/call-me-sam/" target="_blank" rel="noopener">Call me Sam: a theme for Hugo</a></h1>
+<h1><a href="https://hugo-sam.netlify.com/" target="_blank" rel="noopener">Call me Sam: a theme for Hugo</a></h1>
 
-![Main page screenshot](https://github.com/vickylai/hugo-theme-sam/blob/master/images/screenshot.png)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/b069f23f-06c5-4af6-b1aa-6304d986f9b0/deploy-status)](https://app.netlify.com/sites/hugo-sam/deploys)
+[![Build Status](https://travis-ci.com/victoriadotdev/hugo-theme-sam.svg?branch=master)](https://travis-ci.com/victoriadotdev/hugo-theme-sam)
+![Latest Release](https://img.shields.io/github/tag/victoriadotdev/hugo-theme-sam.svg)
+
+![Main page screenshot](https://github.com/victoriadotdev/hugo-theme-sam/blob/master/images/screenshot.png)
 
 Sam is a Simple and Minimalist theme for Hugo. It lets you categorize and showcase your content the way you want to.
 
 Focused on content and typography, the stylized index page is really just a list of navigation links that you can set in your `config.toml`. This versatile design is limited only by your imagination, as you can make it say anything you like. Here are some ideas.
 
-![Index page iterations.](https://github.com/vickylai/hugo-theme-sam/blob/master/images/ideas.png)
+![Index page iterations.](https://github.com/victoriadotdev/hugo-theme-sam/blob/master/images/ideas.png)
 
 # Features:
 
 - Showcase content
     - Content-focused page templates for list pages, single pages, and posts
-    - A responsive CSS grid gallery page that renders from a folder of images
+    - A responsive CSS grid gallery page that renders from images in your [Page Bundle](https://gohugo.io/content-management/organization/#page-bundles)
 - Customize
     - Custom navigation menu set via `config.toml`
     - Custom footer text
 - Developer-approved
     - Syntax highlighting
-    - Share-ready metadata set via `config.toml` (OpenGraph and Twitter Cards integration)
-    - Easy-to-navigate Sass files included
+    - Share-ready pages with [Open Graph](https://gohugo.io/templates/internal/#open-graph) and [Twitter](https://gohugo.io/templates/internal/#twitter-cards) metadata you can customize in `config.toml` and page front-matter
+    - Effortless use of Hugo Pipes to generate CSS from Sass files
 
 
 # Quick start
@@ -28,13 +32,13 @@ Focused on content and typography, the stylized index page is really just a list
 
 Run from the root of your Hugo site:
 ```sh
-$ git clone https://github.com/vickylai/hugo-theme-sam.git themes/sam
+$ git clone https://github.com/victoriadotdev/hugo-theme-sam.git themes/sam
 ```
 
 Alternatively you can include this repository as a [git submodule](https://git-scm.com/book/de/v1/Git-Tools-Submodule). This makes it easier to update this theme if you have your Hugo site in git as well. For this you need to run:
 
 ```sh
-$ git submodule add https://github.com/vickylai/hugo-theme-sam.git themes/sam
+$ git submodule add https://github.com/victoriadotdev/hugo-theme-sam.git themes/sam
 ```
 
 ## 2. Configure your site
@@ -88,77 +92,70 @@ $ hugo new posts/your-post-title.md
 
 ## Image gallery
 
-To create an image gallery, place all the files you want included in a folder within `/content/gallery/`. The exampleSite has this configured as `content/gallery/images/` but you can change the name of the "images" folder in `config.toml` if you wish.
+To create an image gallery, place all the files you want included in your [Page Bundle](https://gohugo.io/content-management/organization/#page-bundles). The directory structure might then look like this:
 
 ```
 content/
  └── gallery/
-    └── images/
-    |   ├── file_1.jpg
-    |   ├── file_2.jpg
-    |   └── file_3.jpg
-    └── _index.md
+     └── _index.md
+     └── images/
+         ├── file_1.jpg
+         ├── file_2.jpg
+         └── file_3.jpg
 ```
 
-The gallery title is defined in the front matter of `_index.md`. You can also optionally define the page URL using `url`:
+To automagically generate a gallery from the images, set `type: "gallery"` in the front-matter of `_index.md`. You can also set other options for the gallery:
 
-```
+* The gallery `title`
+* The page link with `url`
+* The `maxWidth` of the resized images
+* Whether you want the images to link to the full size files, with `clickablePhotos`
+
+Here is an example of a gallery's `_index.md`:
+
+```yaml
 ---
 title: "Portraits"
 type: "gallery"
 url: "/portrait-gallery"
+maxWidth: "800x"
+clickablePhotos: true
 ---
 ```
 
-In order to create more than one gallery, create multiple folders in `content/` with this file structure and `type: "gallery"` defined in the `_index.md` front matter.
-
-In `config.toml`, you can set `smallPreviewImages` to `true` in order to use small sized thumbnails. Include those thumbnail files in your gallery image folder. In exampleSite, this looks like:
+In order to create more than one gallery, create multiple Page Bundles with images and `type: "gallery"` defined in the `_index.md` front matter. For example:
 
 ```
 content/
- └── gallery/
-    └── images/
-        │   └── small/
-        |       ├── file_1.jpg
-        |       ├── file_2.jpg
-        |       └── file_3.jpg
-        ├── file_1.jpg
-        ├── file_2.jpg
-        └── file_3.jpg
+ | └── gallery/
+ |     └── _index.md
+ |     └── images/
+ |         ├── file_1.jpg
+ |         ├── file_2.jpg
+ |         └── file_3.jpg
+ |
+ └── portfolio/
+     └── _index.md
+     └── images/
+         ├── file_1.jpg
+         ├── file_2.jpg
+         └── file_3.jpg
 ```
-
-The thumbnails need to have the same filenames as the larger images they represent.
 
 That's it! Sam's gallery layout template will automagically build the page from your images.
 
 
 # Editing the theme
 
-All the theme's Sass files are included. You can compile these to CSS using the npm scripts included in `package.json`.
-
-Prerequisites:
-* Node.js and npm: https://www.npmjs.com/get-npm
-
-To install all dependencies:
-
-```sh
-$ npm install
-```
-
-Available commands are:
-
-* `npm run build:sass` compiles Sass files to compressed CSS
-* `npm run autoprefixer` autoprefixes the compiled CSS
-* `npm run build` does all the above
-* `npm run watch` watches Sass files for changes and automatically recompiles and autoprefixes the CSS
+This theme uses [Hugo Pipes](https://gohugo.io/hugo-pipes/introduction/) to compile, autoprefix, and minify its CSS styles from the included Sass files. You can run the built-in server to preview the site as you make changes to the Sass files!
 
 # Contributing
 
 Pull requests for bug fixes and enhancements are welcome.
 
-__Thank you to:__ @paskal, @crownsedge, @jazzi, @hakamadare, @mfg92, @Hanzei, and @lx4r!
+Open source themes like this one would not be possible without some amazing __[contributors](https://github.com/victoriadotdev/hugo-theme-sam/graphs/contributors)__. Thank you!
 
 # License
-Copyright (C) 2018 Vicky Lai
+Copyright (C) 2018 Victoria Lai
 
-Licensed under [AGPL-3.0](https://github.com/vickylai/hugo-theme-sam/blob/master/LICENSE)
+Licensed under [AGPL-3.0](https://github.com/victoriadotdev/hugo-theme-sam/blob/master/LICENSE)
